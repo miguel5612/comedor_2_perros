@@ -7,6 +7,11 @@ Rfid::Rfid(int SS_PIN,int RST_PIN)
     mfrc522 = MFRC522(RST_PIN,SS_PIN);
 }
 
+void Rfid::loopClearInterrupt()
+{
+      mfrc522.PCD_WriteRegister(MFRC522::ComIrqReg, 0x80); //Clear interrupts
+}
+
 void Rfid::begin()
 {
     mfrc522.PCD_Init();  
@@ -25,7 +30,7 @@ int* Rfid::read(){
         } 
         mfrc522.PICC_HaltA();   
     }      
-  } 
+  }  
   return response;
 
 }
